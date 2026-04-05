@@ -1,6 +1,6 @@
 import User from "../models/user.js";
 import {v4 as uuidv4} from "uuid";
-import {setUser} from "../services/auth.js";
+import {getUser, setUser} from "../services/auth.js";
 import bcrypt from "bcrypt";
 
 async function handleUserSignup(req,res){
@@ -43,7 +43,10 @@ async function handleUserLogin(req,res){
     // const sessionId=uuidv4();
     // setUser(sessionId,user);
     // res.cookie("uid",sessionId);
-    req.session.userId = user._id;
+    // req.session.userId = user._id;
+
+    const token=setUser(user);
+    res.cookie("uid",token);
 
     return res.render("home", { user });
     } catch(err){
