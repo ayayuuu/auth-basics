@@ -1,12 +1,20 @@
 import express from "express";
 const app=express();
 import mongoose from "mongoose";
+import session from "express-session";
 import cookieParser from "cookie-parser";
 
 import userRoute from "./routes/user.js";
 import staticRoute from "./routes/staticRouter.js";
 import restrictToLoggedInUsersOnly from "./middlewares/auth.js";
 
+const sessionOptions={
+    secret:"SecretString",
+    resave:false,
+    saveUninitialized:true
+}
+
+app.use(session(sessionOptions));
 app.use(express.json());
 // Parse URL-encoded bodies (for form submissions)
 app.use(express.urlencoded({ extended: true }));

@@ -40,9 +40,10 @@ async function handleUserLogin(req,res){
             return res.status(400).send("Invalid credentials");
         }
 
-    const sessionId=uuidv4();
-    setUser(sessionId,user);
-    res.cookie("uid",sessionId);
+    // const sessionId=uuidv4();
+    // setUser(sessionId,user);
+    // res.cookie("uid",sessionId);
+    req.session.userId = user._id;
 
     return res.render("home", { user });
     } catch(err){
